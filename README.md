@@ -1,159 +1,171 @@
-# Tetris - Classic HTML5 Game
+# Tetris - 经典俄罗斯方块游戏
 
-A fully functional Tetris game built with pure HTML5, CSS3, and JavaScript. Features a modern dark theme, smooth animations, and responsive design.
+一个功能完整的 HTML5 俄罗斯方块游戏，使用纯 HTML5、CSS3 和 JavaScript 构建。采用现代暗色主题，流畅动画和响应式设计。
 
 ![Tetris Game](./screenshot.png)
 
-## Features
+## 特性
 
-### Core Gameplay
-- **7 Standard Tetromino Pieces**: I, O, T, S, Z, J, L - each with unique colors
-- **Piece Rotation**: 90-degree clockwise rotation with wall-kick support
-- **Ghost Piece**: Visual indicator showing where the piece will land
-- **Line Clearing**: Remove completed lines for points
-- **Level Progression**: Speed increases every 10 lines cleared
-- **Next Piece Preview**: See what's coming next
+### 核心玩法
+- **7 种标准方块**: I, O, T, S, Z, J, L - 每种都有独特的颜色
+- **方块旋转**: 90 度顺时针旋转，支持墙踢（Wall Kick）
+- **幽灵块**: 视觉指示器显示方块将落在哪里
+- **消行系统**: 消除完成的行以获得分数
+- **等级推进**: 每消除 10 行速度加快
+- **下一个方块预览**: 查看接下来会出现的方块
 
-### Scoring System
-| Action | Points (Base) |
+### 计分系统
+| 操作 | 基础分数 |
 |--------|---------------|
-| Single Line | 100 |
-| Double Lines | 300 |
-| Triple Lines | 500 |
-| Tetris (4 lines) | 800 |
-| Soft Drop | 1 per cell |
-| Hard Drop | 2 per cell |
+| 单行消除 | 100 |
+| 双行消除 | 300 |
+| 三行消除 | 500 |
+| 四行消除 (Tetris) | 800 |
+| 软降 | 每格 1 分 |
+| 硬降 | 每格 2 分 |
 
-### Controls
-| Key | Action |
+### 操作控制
+| 按键 | 动作 |
 |-----|--------|
-| ← → | Move left/right |
-| ↑ | Rotate piece |
-| ↓ | Soft drop (faster fall) |
-| Space | Hard drop (instant) |
-| P | Pause/Resume |
-| Enter | Start/Restart game |
+| ← → | 左右移动 |
+| ↑ | 旋转方块 |
+| ↓ | 软降（加速下落） |
+| Space | 硬降（瞬间到底） |
+| P | 暂停/继续 |
+| Enter | 开始/重新开始游戏 |
 
-### Additional Features
-- **Pause/Resume**: Press P or use the Pause button
-- **Touch Controls**: Swipe on mobile devices
-- **Responsive Design**: Works on desktop and mobile
-- **Modern UI**: Dark theme with gradient effects
-- **Smooth Animations**: Line clear and level-up effects
+### 额外功能
+- **暂停/继续**: 按 P 或使用暂停按钮
+- **触摸控制**: 移动设备上支持滑动操作
+- **响应式设计**: 桌面和移动端都能完美运行
+- **现代 UI**: 暗色主题搭配渐变效果
+- **流畅动画**: 消行闪光和升级特效
 
-## Project Structure
+## 项目结构
 
 ```
 Tetris/
-├── index.html          # Main HTML file
-├── README.md           # This documentation
+├── index.html          # 主页面文件
+├── README.md           # 本文档
 ├── css/
-│   └── style.css       # Game styles and animations
+│   └── style.css       # 游戏样式和动画
 ├── js/
-│   ├── game.js         # Main game logic
-│   └── pieces.js       # Tetromino definitions and rotation
-├── .gitignore          # Git ignore file
-└── deploy.sh           # Deployment script
+│   ├── game.js         # 主要游戏逻辑
+│   └── pieces.js       # 方块定义和旋转逻辑
+├── .gitignore          # Git 忽略文件
+└── deploy.sh           # 部署脚本
 ```
 
-## Getting Started
+## 开始使用
 
-### Running Locally
+### 本地运行
 
-1. Clone or download this repository
-2. Open `index.html` in a modern web browser
-3. Click "Start Game" to begin playing!
+1. 克隆或下载此仓库
+2. 在現代浏览器中打开 `index.html`
+3. 点击"Start Game"开始游戏！
 
-No build process or dependencies required - just open the HTML file!
+无需构建过程或依赖 - 只需打开 HTML 文件即可！
 
-### Browser Support
+### 浏览器支持
 
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
 - Edge 90+
 
-## Technical Details
+## 技术细节
 
-### Game Architecture
+### 游戏架构
 
-The game is built using vanilla JavaScript with no external frameworks:
+游戏使用原生 JavaScript 构建，无需外部框架：
 
-- **Game Loop**: Uses `requestAnimationFrame` for smooth 60fps rendering
-- **Canvas Rendering**: HTML5 Canvas for high-performance graphics
-- **State Management**: Simple state object for game control
-- **Collision Detection**: Grid-based collision system with wall kicks
+- **游戏循环**: 使用 `requestAnimationFrame` 实现流畅的 60fps 渲染
+- **Canvas 渲染**: HTML5 Canvas 提供高性能图形
+- **状态管理**: 简单的状态对象进行游戏控制
+- **碰撞检测**: 基于网格的碰撞系统，支持墙踢
 
-### Key Components
+### 核心组件
 
 #### pieces.js
-Defines all tetromino shapes, colors, and rotation logic:
-- Shape matrices for each piece type
-- Wall-kick algorithm for rotation near boundaries
-- Random piece generation using bag system
+定义所有方块的形状、颜色和旋转逻辑：
+- 每种方块类型的形状矩阵
+- 边界附近的旋转算法（墙踢）
+- 使用袋子系统的随机方块生成
 
 #### game.js
-Main game engine handling:
-- Board management (10x20 grid)
-- Movement and collision detection
-- Line clearing and scoring
-- Level progression
-- UI updates
+主要游戏引擎处理：
+- 棋盘管理（10x20 网格）
+- 移动和碰撞检测
+- 消行和计分
+- 等级推进
+- UI 更新
 
-### Scoring Formula
+### 计分公式
 ```
-Score = Base Points × Level
+分数 = 基础分数 × 等级
 ```
-Where base points depend on lines cleared in single action.
+其中基础分数取决于单次操作消除的行数。
 
-## Deployment
+## 部署
 
 ### GitHub Pages
 
-1. Push code to GitHub repository
-2. Go to Settings → Pages
-3. Select branch and folder (usually `main` root)
-4. Your game will be available at `https://username.github.io/repo-name/`
+1. 将代码推送到 GitHub 仓库
+2. 进入 Settings → Pages
+3. 选择分支和文件夹（通常是 `main` 根目录）
+4. 您的游戏将在以下地址可用：`https://username.github.io/repo-name/`
 
-### Manual Deployment
+### 手动部署
 
-Use the included `deploy.sh` script:
+使用内置的 `deploy.sh` 脚本：
 
 ```bash
 chmod +x deploy.sh
 ./deploy.sh
 ```
 
-This will:
-- Create a dist folder with optimized files
-- Initialize git in the dist folder
-- Commit and push to the gh-pages branch
+这将：
+- 创建包含优化文件的 dist 文件夹
+- 在 dist 文件夹中初始化 git
+- 提交并推送到 gh-pages 分支
 
-## Development
+## 开发
 
-### Building Features
+### 添加功能
 
-The codebase is designed for easy extension:
+代码库设计为易于扩展：
 
-1. **Adding Custom Pieces**: Edit `pieces.js` TETROMINOS object
-2. **Customizing Colors**: Modify color values in pieces.js or CSS
-3. **Adjusting Speed**: Change DROP_INTERVAL or level progression in game.js
+1. **添加自定义方块**: 编辑 `pieces.js` 中的 TETROMINOS 对象
+2. **自定义颜色**: 修改 pieces.js 或 CSS 中的颜色值
+3. **调整速度**: 更改 game.js 中的 DROP_INTERVAL 或等级推进逻辑
 
-### Code Style
+### 代码风格
 
-- ES6+ JavaScript syntax
-- Modular function design
-- Comprehensive JSDoc comments
-- Clean separation of concerns (pieces vs game logic)
+- ES6+ JavaScript 语法
+- 模块化函数设计
+- 全面的 JSDoc 注释
+- 清晰的关注点分离（pieces 与游戏逻辑）
 
-## License
+## 已知问题修复
 
-This project is open source and available for educational purposes.
+### v1.1 - 幽灵块重影修复
+**修复日期**: 2026-03-26
 
-## Credits
+**问题描述**: 幽灵块在移动时会出现重复渲染的问题。
 
-Built with HTML5 Canvas, CSS3, and Vanilla JavaScript. Inspired by the classic Tetris game created by Alexey Pajitnov in 1984.
+**解决方案**:
+- 使用 `ctx.save()` 和 `ctx.restore()` 保存和恢复 Canvas 状态
+- 确保每次绘制后正确重置 `globalAlpha`
+- 添加边界检查，避免与实际方块重叠渲染
+
+## 许可证
+
+本项目为开源项目，仅供学习用途。
+
+## 致谢
+
+使用 HTML5 Canvas、CSS3 和原生 JavaScript 构建。灵感来源于 Alexey Pajitnov 于 1984 年创作的经典俄罗斯方块游戏。
 
 ---
 
-**Enjoy playing!** If you encounter any issues or have suggestions for improvement, feel free to contribute.
+**祝您游戏愉快！** 如果您遇到任何问题或有改进建议，欢迎贡献代码。

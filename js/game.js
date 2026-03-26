@@ -176,6 +176,9 @@ function drawBoard() {
 function drawCurrentPiece() {
     if (!currentPiece || gameOver || isPaused) return;
 
+    // Save canvas state before drawing
+    ctx.save();
+    
     // Draw ghost piece (shadow showing where piece will land)
     const ghostY = getGhostPosition();
     for (let row = 0; row < currentPiece.shape.length; row++) {
@@ -184,11 +187,10 @@ function drawCurrentPiece() {
                 const x = currentPiece.x + col;
                 const y = ghostY + row;
 
-                // Only draw ghost if it's within bounds
-                if (y >= 0 && y < ROWS) {
+                // Only draw ghost if it's within bounds and not overlapping actual piece
+                if (y >= 0 && y < ROWS && y !== currentPiece.y) {
                     ctx.globalAlpha = 0.2;
                     drawBlock(ctx, x, y, currentPiece.color);
-                    ctx.globalAlpha = 1;
                 }
             }
         }
@@ -203,11 +205,15 @@ function drawCurrentPiece() {
 
                 // Only draw if within visible area
                 if (y >= -1 && y < ROWS) {
+                    ctx.globalAlpha = 1.0;
                     drawBlock(ctx, x, y, currentPiece.color);
                 }
             }
         }
     }
+    
+    // Restore canvas state to reset alpha and other properties
+    ctx.restore();
 }
 
 /**
