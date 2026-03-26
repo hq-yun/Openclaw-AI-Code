@@ -436,10 +436,33 @@ function updateUI() {
  * Show game over overlay
  */
 function showGameOver() {
-    overlayTitle.textContent = 'Game Over';
-    overlayMessage.textContent = `Final Score: ${score.toLocaleString()}\nLevel: ${level}`;
-    restartBtn.style.display = 'block';
-    overlay.classList.remove('hidden');
+    // Hide the celebration overlay if it was showing
+    const celebration = document.getElementById('celebration');
+    if (celebration) {
+        celebration.classList.add('hidden');
+    }
+
+    // Update final score display
+    const finalScoreElement = document.getElementById('final-score');
+    if (finalScoreElement) {
+        finalScoreElement.textContent = score.toLocaleString();
+    }
+
+    // Show the game over celebration overlay
+    if (celebration) {
+        celebration.classList.remove('hidden');
+    } else {
+        // Fallback to old overlay if celebration doesn't exist
+        const overlayTitle = document.getElementById('overlay-title');
+        const overlayMessage = document.getElementById('overlay-message');
+        const restartBtn = document.getElementById('restart-btn');
+        const overlay = document.getElementById('overlay');
+
+        if (overlayTitle) overlayTitle.textContent = 'Game Over';
+        if (overlayMessage) overlayMessage.textContent = `Final Score: ${score.toLocaleString()}\nLevel: ${level}`;
+        if (restartBtn) restartBtn.style.display = 'block';
+        if (overlay) overlay.classList.remove('hidden');
+    }
 }
 
 /**
@@ -490,7 +513,12 @@ function resetGame() {
     spawnNewPiece();
     updateUI();
 
-    overlay.classList.add('hidden');
+    // Hide all overlays including celebration
+    const overlay = document.getElementById('overlay');
+    const celebration = document.getElementById('celebration');
+    
+    if (overlay) overlay.classList.add('hidden');
+    if (celebration) celebration.classList.add('hidden');
 
     lastDropTime = performance.now();
     if (animationId) {
@@ -616,6 +644,16 @@ function initEventListeners() {
     pauseBtn.addEventListener('click', togglePause);
 
     restartBtn.addEventListener('click', resetGame);
+
+    // Game over "Play Again" button
+    const playAgainBtn = document.getElementById('play-again-btn');
+    if (playAgainBtn) {
+        playAgainBtn.addEventListener('click', () => {
+            // Hide celebration overlay
+            document.getElementById('celebration').classList.add('hidden');
+            resetGame();
+        });
+    }
 
     // Touch controls for mobile
     let touchStartX = 0;
