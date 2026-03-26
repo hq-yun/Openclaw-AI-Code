@@ -2,63 +2,161 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tetris - Classic Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tetris - Neon Cyberpunk Edition</title>
+    <!-- 引入字体图标用于控制说明 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- 动态背景容器 - 网格动画效果 -->
+    <div class="background-animation"></div>
+    
     <div class="game-container">
         <header class="game-header">
-            <h1>TETRIS</h1>
+            <h1><i class="fas fa-cube"></i> TETRIS</h1>
         </header>
 
         <div class="game-board">
-            <aside class="side-panel left-panel">
-                <div class="stats-box">
-                    <h3>Score</h3>
-                    <p id="score" class="stat-value">0</p>
+            <!-- 左侧面板 - 统计信息（玻璃态设计） -->
+            <aside class="side-panel left-panel glass-panel">
+                <div class="stats-box score-box">
+                    <h3><i class="fas fa-star"></i> Score</h3>
+                    <p id="score" class="stat-value neon-text">0</p>
                 </div>
-                <div class="stats-box">
-                    <h3>Level</h3>
-                    <p id="level" class="stat-value">1</p>
+                
+                <div class="stats-box level-box">
+                    <h3><i class="fas fa-level-up-alt"></i> Level</h3>
+                    <p id="level" class="stat-value neon-text">1</p>
+                    
+                    <!-- 进度条 - 显示下一等级所需分数 -->
+                    <div class="progress-container">
+                        <div class="progress-label"><i class="fas fa-chart-line"></i> Next Level</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="level-progress"></div>
+                        </div>
+                        <span class="progress-text" id="score-to-next">100/500</span>
+                    </div>
                 </div>
-                <div class="stats-box">
-                    <h3>Lines</h3>
-                    <p id="lines" class="stat-value">0</p>
+
+                <div class="stats-box lines-box">
+                    <h3><i class="fas fa-layer-group"></i> Lines</h3>
+                    <p id="lines" class="stat-value neon-text">0</p>
+                </div>
+
+                <!-- 最高分显示 -->
+                <div class="stats-box highscore-box">
+                    <h3><i class="fas fa-trophy"></i> High Score</h3>
+                    <p id="high-score" class="stat-value neon-text">0</p>
                 </div>
             </aside>
 
+            <!-- 中央游戏画布 -->
             <div class="canvas-container">
                 <canvas id="gameCanvas" width="300" height="600"></canvas>
+                
+                <!-- 消行闪光效果层 -->
+                <div class="flash-overlay" id="flash-overlay"></div>
+
+                <!-- 游戏覆盖层 - 开始/暂停/结束（玻璃态弹窗） -->
                 <div id="overlay" class="overlay hidden">
-                    <h2 id="overlay-title">Paused</h2>
-                    <p id="overlay-message">Press P to resume</p>
-                    <button id="restart-btn" class="btn btn-primary">Restart Game</button>
+                    <div class="overlay-content glass-panel">
+                        <h2 id="overlay-title"><i class="fas fa-pause-circle"></i> Paused</h2>
+                        <p id="overlay-message">Press P to resume</p>
+                        <button id="restart-btn" class="btn btn-primary neon-button">
+                            <i class="fas fa-redo"></i> Restart Game
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <aside class="side-panel right-panel">
+            <!-- 右侧面板 - 下一个方块和控制说明 -->
+            <aside class="side-panel right-panel glass-panel">
                 <div class="stats-box next-piece-box">
-                    <h3>Next</h3>
+                    <h3><i class="fas fa-eye"></i> Next</h3>
                     <canvas id="nextCanvas" width="120" height="120"></canvas>
                 </div>
-                <div class="controls-info">
-                    <h3>Controls</h3>
-                    <ul>
-                        <li><kbd>←</kbd> <kbd>→</kbd> Move</li>
-                        <li><kbd>↑</kbd> Rotate</li>
-                        <li><kbd>↓</kbd> Soft Drop</li>
-                        <li><kbd>Space</kbd> Hard Drop</li>
-                        <li><kbd>P</kbd> Pause</li>
+
+                <!-- 控制说明（图标 + 文字组合） -->
+                <div class="controls-info glass-panel">
+                    <h3><i class="fas fa-keyboard"></i> Controls</h3>
+                    <ul class="control-list">
+                        <li>
+                            <span class="control-label"><i class="fas fa-arrow-left"></i> <i class="fas fa-arrow-right"></i></span>
+                            <span class="control-text">Move</span>
+                        </li>
+                        <li>
+                            <span class="control-label"><i class="fas fa-sync-alt"></i></span>
+                            <span class="control-text">Rotate (↑)</span>
+                        </li>
+                        <li>
+                            <span class="control-label"><i class="fas fa-arrow-down"></i></span>
+                            <span class="control-text">Soft Drop</span>
+                        </li>
+                        <li>
+                            <span class="control-label"><i class="fas fa-bolt"></i></span>
+                            <span class="control-text">Hard Drop (Space)</span>
+                        </li>
+                        <li>
+                            <span class="control-label"><i class="fas fa-pause"></i></span>
+                            <span class="control-text">Pause (P/Esc)</span>
+                        </li>
                     </ul>
                 </div>
+
+                <!-- 移动端控制按钮（触摸优化） -->
+                <div class="mobile-controls" id="mobile-controls">
+                    <div class="mobile-btn-row">
+                        <button class="mobile-btn" data-action="rotate">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="mobile-btn-row">
+                        <button class="mobile-btn" data-action="left">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <button class="mobile-btn" data-action="down">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button class="mobile-btn" data-action="right">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="mobile-btn-row">
+                        <button class="mobile-btn mobile-btn-large" data-action="drop">
+                            <i class="fas fa-bolt"></i> Drop
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 暂停/开始按钮（带状态切换动画） -->
+                <button class="btn btn-secondary neon-button" id="pause-btn" style="display: none;">
+                    <i class="fas fa-play"></i> Resume
+                </button>
             </aside>
         </div>
 
+        <!-- 底部操作按钮区 -->
         <footer class="game-footer">
-            <button id="start-btn" class="btn btn-primary">Start Game</button>
-            <button id="pause-btn" class="btn btn-secondary">Pause</button>
+            <button id="start-btn" class="btn btn-primary neon-button">
+                <i class="fas fa-play"></i> Start Game
+            </button>
+            <button id="pause-btn-footer" class="btn btn-secondary neon-button" style="display: none;">
+                <i class="fas fa-pause"></i> Pause
+            </button>
         </footer>
+    </div>
+
+    <!-- 游戏结束庆祝动画层（粒子效果容器） -->
+    <div class="celebration-overlay hidden" id="celebration">
+        <div class="confetti-container" id="confetti-container"></div>
+        <div class="game-over-content glass-panel">
+            <h2><i class="fas fa-trophy"></i> Game Over</h2>
+            <p>Final Score: <span id="final-score" class="neon-text">0</span></p>
+            <button id="play-again-btn" class="btn btn-primary neon-button">
+                <i class="fas fa-redo"></i> Play Again
+            </button>
+        </div>
     </div>
 
     <script src="js/pieces.js"></script>
