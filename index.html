@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris - Classic Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>TETRIS</h1>
+        </header>
+
+        <div class="game-board">
+            <aside class="side-panel left-panel">
+                <div class="stats-box">
+                    <h3>Score</h3>
+                    <p id="score" class="stat-value">0</p>
+                </div>
+                <div class="stats-box">
+                    <h3>Level</h3>
+                    <p id="level" class="stat-value">1</p>
+                </div>
+                <div class="stats-box">
+                    <h3>Lines</h3>
+                    <p id="lines" class="stat-value">0</p>
+                </div>
+            </aside>
+
+            <div class="canvas-container">
+                <canvas id="gameCanvas" width="300" height="600"></canvas>
+                <div id="overlay" class="overlay hidden">
+                    <h2 id="overlay-title">Paused</h2>
+                    <p id="overlay-message">Press P to resume</p>
+                    <button id="restart-btn" class="btn btn-primary">Restart Game</button>
+                </div>
+            </div>
+
+            <aside class="side-panel right-panel">
+                <div class="stats-box next-piece-box">
+                    <h3>Next</h3>
+                    <canvas id="nextCanvas" width="120" height="120"></canvas>
+                </div>
+                <div class="controls-info">
+                    <h3>Controls</h3>
+                    <ul>
+                        <li><kbd>←</kbd> <kbd>→</kbd> Move</li>
+                        <li><kbd>↑</kbd> Rotate</li>
+                        <li><kbd>↓</kbd> Soft Drop</li>
+                        <li><kbd>Space</kbd> Hard Drop</li>
+                        <li><kbd>P</kbd> Pause</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="game-footer">
+            <button id="start-btn" class="btn btn-primary">Start Game</button>
+            <button id="pause-btn" class="btn btn-secondary">Pause</button>
+        </footer>
+    </div>
+
+    <script src="js/pieces.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

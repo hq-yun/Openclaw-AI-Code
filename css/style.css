@@ -1,0 +1,306 @@
+/* Tetris Game Styles - Dark Theme */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 900px;
+    width: 100%;
+}
+
+.game-header {
+    text-align: center;
+    margin-bottom: 20px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.game-header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #e94560, #ff6b6b, #feca57);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(233, 69, 96, 0.5);
+}
+
+@keyframes glow {
+    from {
+        filter: drop-shadow(0 0 10px rgba(233, 69, 96, 0.5));
+    }
+    to {
+        filter: drop-shadow(0 0 20px rgba(233, 69, 96, 0.8));
+    }
+}
+
+.game-board {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.canvas-container {
+    position: relative;
+    border: 4px solid #e94560;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(233, 69, 96, 0.3),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+#gameCanvas {
+    display: block;
+    background: linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 100%);
+}
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.left-panel, .right-panel {
+    width: 140px;
+}
+
+.stats-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #e94560;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stats-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(233, 69, 96, 0.3);
+}
+
+.stats-box h3 {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.next-piece-box canvas {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.controls-info {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #e94560;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.controls-info h3 {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.controls-info ul {
+    list-style: none;
+    font-size: 0.85rem;
+}
+
+.controls-info li {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.controls-info li:last-child {
+    border-bottom: none;
+}
+
+kbd {
+    background: linear-gradient(145deg, #2a2a4a, #1a1a3a);
+    border: 1px solid #e94560;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: #e94560;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.overlay.hidden {
+    display: none;
+}
+
+.overlay h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #e94560;
+    text-shadow: 0 0 20px rgba(233, 69, 96, 0.8);
+}
+
+.overlay-message {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #a0a0a0;
+}
+
+.btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: linear-gradient(145deg, #e94560, #c73e54);
+    color: #fff;
+    box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 25px rgba(233, 69, 96, 0.6);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #e94560;
+    border: 2px solid #e94560;
+}
+
+.btn-secondary:hover {
+    background: rgba(233, 69, 96, 0.2);
+}
+
+.game-footer {
+    display: flex;
+    gap: 15px;
+}
+
+/* Line clear animation */
+@keyframes lineClear {
+    0% {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+.line-clear-animation {
+    animation: lineClear 0.3s ease-out;
+}
+
+/* Level up animation */
+@keyframes levelUp {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.level-up {
+    animation: levelUp 0.5s ease-out;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .game-board {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .side-panel {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .left-panel, .right-panel {
+        width: auto;
+    }
+
+    .game-header h1 {
+        font-size: 2rem;
+    }
+
+    #gameCanvas {
+        max-width: 300px;
+        max-height: 600px;
+    }
+
+    .controls-info ul {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        padding: 10px;
+    }
+
+    .stats-box {
+        padding: 10px;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
