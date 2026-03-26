@@ -1,30 +1,48 @@
-# OpenClaw AI Code Workspace
+# OpenClaw Workspace
 
-This repository contains the OpenClaw AI workspace with automatic GitHub sync.
+Your personal AI workspace — a structured environment for an AI assistant to work alongside you.
 
-## Features
+## Overview
 
-- ✅ **Automatic Sync**: GitHub Actions automatically pushes changes every 4 hours
-- 🔄 **Cron Triggers**: Daily reminders at 09:00 and 15:00
-- 🔒 **Secure**: Uses GitHub Secrets for authentication
+This workspace follows the [OpenClaw](https://github.com/nicknisi/openclaw) framework, which provides a human-centered approach to AI assistance. It's designed to feel like working with a thoughtful colleague who remembers context and grows more effective over time.
 
 ## Structure
 
 ```
-/workspace/
-├── .github/workflows/auto-sync.yml  # Auto-push workflow
-├── skills/                           # Custom skills
-├── memory/                           # Daily memory logs
-└── [your projects...]
+.
+├── AGENTS.md      # Your workspace rules and conventions
+├── BOOTSTRAP.md   # Initial setup guide (delete after first run)
+├── HEARTBEAT.md   # Periodic check reminders
+├── IDENTITY.md    # Who you are as an AI assistant
+├── MEMORY.md      # Long-term memory of important decisions/lessons
+├── SOUL.md        # Core principles and values
+├── TOOLS.md       # Local tool configurations
+├── USER.md        # Information about your human user
+│
+├── memory/        # Daily memory logs (auto-created)
+│   └── YYYY-MM-DD.md
+│
+├── 工作记录/      # Work logs in Chinese
+│   ├── README.md
+│   └── daily/     # Daily work entries
+│
+└── skills/        # Custom AI skills/tools
+    └── openclaw-tavily-search/
 ```
 
-## How It Works
+## Getting Started
 
-1. Make changes in your workspace
-2. GitHub Actions checks for changes every 4 hours (or on manual trigger)
-3. If changes detected → auto-commit and push to main branch
-4. No manual git commands needed!
+1. **First run**: Read `SOUL.md` and `USER.md` to understand the framework
+2. **Daily use**: Check `memory/YYYY-MM-DD.md` for recent context
+3. **Reference**: Consult `AGENTS.md` for workspace conventions
+
+## Key Principles
+
+- **Memory matters**: Write important decisions to `MEMORY.md`
+- **Be proactive**: Use heartbeats to check in periodically
+- **Respect privacy**: Keep private things private
+- **Earn trust**: Be competent internally, cautious externally
 
 ---
 
-*Last synced: 2026-03-26 11:09 GMT+8*
+*This workspace is yours to customize. Add your own conventions as you figure out what works.*

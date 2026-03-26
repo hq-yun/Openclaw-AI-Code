@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "openclaw-tavily-search": {
+      "version": "0.1.0",
+      "installedAt": 1774259581854
+    },
+    "claude-code-teams": {
+      "version": "1.0.0",
+      "installedAt": 1774344003196
+    },
+    "github": {
+      "version": "1.0.0",
+      "installedAt": 1774490581243
+    },
+    "devops": {
+      "version": "1.0.0",
+      "installedAt": 1774490601107
+    },
+    "skill-vetter": {
+      "version": "1.0.0",
+      "installedAt": 1774490661418
+    },
+    "gog": {
+      "version": "1.0.0",
+      "installedAt": 1774490701692
+    }
+  }
+}

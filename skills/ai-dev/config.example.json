@@ -1,0 +1,20 @@
+{
+  "default_test_command": "npm test",
+  "auto_merge": true,
+  "reviewers": [
+    "@copilot"
+  ],
+  "labels": [
+    "ai-generated",
+    "automated"
+  ],
+  "max_retries": 3,
+  "timeout_seconds": 300,
+  "agent_id": "claude-code",
+  "workspace_base": "/home/huiquanyun/.openclaw/workspace",
+  "allowed_projects": [
+    "/home/huiquanyun/桌面/Openclaw-AI-Code"
+  ],
+  "auto_approve_tests": true,
+  "notify_on_completion": true
+}
