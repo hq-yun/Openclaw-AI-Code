@@ -1,111 +1,87 @@
 #!/bin/bash
 
-# Tetris Game Deployment Script
-# Deploys the game to GitHub Pages (gh-pages branch)
+# 网站复刻助手 - 部署脚本
+# 自动部署到 GitHub Pages
 
-set -e  # Exit on error
+set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DIST_DIR="$SCRIPT_DIR/dist"
-TEMP_GIT_DIR=""
+GITHUB_REPO="https://github.com/hq-yun/Openclaw-AI-Code.git"
+GITHUB_PAGES_URL="https://hq-yun.github.io/Openclaw-AI-Code/"
 
 echo "=========================================="
-echo "    Tetris Game Deployment Script"
+echo "    网站复刻助手 - 部署脚本"
 echo "=========================================="
 echo ""
 
-# Check if git is available
+# 检查 git
 if ! command -v git &> /dev/null; then
-    echo "Error: git is not installed or not in PATH"
+    echo "错误：未安装 git"
     exit 1
 fi
 
-# Check if we're in a git repository
-if [ ! -d "$SCRIPT_DIR/.git" ]; then
-    echo "Error: Not a git repository. Please run this script from the Tetris directory."
-    exit 1
-fi
-
-# Create dist directory
-echo "[1/5] Creating distribution directory..."
+# 创建 dist 目录
+echo "[1/5] 准备分发目录..."
 rm -rf "$DIST_DIR"
 mkdir -p "$DIST_DIR"
 
-# Copy files to dist
-echo "[2/5] Copying files to dist..."
-cp -r "$SCRIPT_DIR"/* "$DIST_DIR/" 2>/dev/null || true
+# 复制文件
+echo "[2/5] 复制项目文件..."
+cp -r "$SCRIPT_DIR"/* "$DIST_DIR/"
 cp -r "$SCRIPT_DIR"/.* "$DIST_DIR/" 2>/dev/null || true
 
-# Remove unnecessary files from dist
-echo "[3/5] Cleaning up distribution files..."
+# 清理不必要的文件
+echo "[3/5] 清理分发文件..."
 rm -rf "$DIST_DIR/.git"
 rm -f "$DIST_DIR/deploy.sh"
+rm -rf "$DIST_DIR/dist"
 
-# Initialize git in dist folder for gh-pages deployment
-echo "[4/5] Setting up deployment repository..."
+# 初始化 git
+echo "[4/5] 设置部署仓库..."
 cd "$DIST_DIR"
 git init -b main --quiet
-git config user.email "deploy@tetris.local"
-git config user.name "Tetris Deploy"
+git config user.email "deploy@websitecloner.local"
+git config user.name "Website Cloner Deploy"
 
-# Add and commit files
 git add .
 git commit -m "Deploy to GitHub Pages [ci skip]" --quiet 2>/dev/null || git commit -m "Initial deployment" --quiet
 
-# Handle gh-pages branch
+# 处理 gh-pages 分支
 if git rev-parse gh-pages --verify &> /dev/null; then
-    # gh-pages branch exists, switch to it and update
-    echo "[5/5] Updating gh-pages branch..."
+    echo "[5/5] 更新 gh-pages 分支..."
     git checkout gh-pages --quiet 2>/dev/null || git checkout -b gh-pages --quiet
-
-    # Remove old files except .git
+    
     find . -type f ! -path './.git/*' -delete
     git add .
     git commit -m "Update deployment [ci skip]" --quiet 2>/dev/null || true
-
-    # Go back to main branch, merge changes
+    
     git checkout main --quiet 2>/dev/null || git checkout master --quiet
     git merge gh-pages --no-edit --quiet 2>/dev/null || true
     git checkout gh-pages --quiet
 else
-    echo "[5/5] Creating new gh-pages branch..."
+    echo "[5/5] 创建新的 gh-pages 分支..."
     git checkout -b gh-pages --quiet
 fi
 
-# Push to remote
+# 推送到远程仓库
 echo ""
-echo "Pushing to remote repository..."
-if git remote get-url origin &> /dev/null; then
-    git push origin gh-pages --force --quiet 2>/dev/null
+echo "推送到 GitHub..."
+git remote add origin "$GITHUB_REPO" 2>/dev/null || true
+git push origin gh-pages --force --quiet
 
-    if [ $? -eq 0 ]; then
-        echo ""
-        echo "=========================================="
-        echo "  Deployment Successful!"
-        echo "=========================================="
-        echo ""
-        echo "Your Tetris game has been deployed to GitHub Pages."
-        echo ""
-
-        # Try to get the repository URL and construct the page URL
-        REPO_URL=$(git remote get-url origin 2>/dev/null || echo "")
-        if [[ "$REPO_URL" =~ github.com[:/]([a-zA-Z0-9_-]+)/([a-zA-Z0-9_.-]+) ]]; then
-            USERNAME="${BASH_REMATCH[1]}"
-            REPO_NAME="${BASH_REMATCH[2]}"
-            echo "URL: https://${USERNAME}.github.io/${REPO_NAME}/"
-        fi
-        echo ""
-    else
-        echo "Warning: Push failed. Make sure you have push access to the repository."
-    fi
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "=========================================="
+    echo "  ✅ 部署成功！"
+    echo "=========================================="
+    echo ""
+    echo "你的网站复刻助手已上线："
+    echo "📍 $GITHUB_PAGES_URL"
+    echo ""
 else
-    echo "No remote 'origin' configured."
-    echo "To enable GitHub Pages deployment:"
-    echo "  1. Create a repository on GitHub"
-    echo "  2. Run: git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git"
-    echo "  3. Run this script again"
+    echo "⚠️ 推送失败，请检查网络连接和 GitHub 权限"
 fi
 
-# Cleanup
 echo ""
-echo "Deployment complete!"
+echo "部署完成！"
